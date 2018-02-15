@@ -2,6 +2,7 @@ class Player{
    int ballsLeft;    // balls remaining
    int ballsUsed;    // balls used -- keeping track in case of visual need
    int score;
+   int lastScoreAmount; // track for display purposes in shotMadeAnimation
    int id;
    Timer timer;
    
@@ -10,6 +11,7 @@ class Player{
      ballsLeft = ballsPerTurn;
      ballsUsed = 0;
      score = 0;
+     lastScoreAmount = 0;
      id = playerId + 1;
    }
    
@@ -34,7 +36,9 @@ class Player{
      ballsUsed++; // incrementing number of balls that have been used
     
      int holeIndex = pinNumber - 3;
-     score = score + holeValues[holeIndex];
+     scoreAmount = holeValues[holeIndex];
+     lastScoreAmount = scoreAmount;
+     score = score + lastScoreAmount;
     
      // If player busts, reduce score to 14
      // Otherwise, update score like usual
