@@ -28,13 +28,13 @@ void gameIntroAnimation() {
 // Advance player display
 void advancePlayerAnimation(){
   if (millis() - advancePlayerAnimationTime <= ADVANCE_PLAYER) {
-    baseAnimationSetup("Turn's Up! Now for "+currentPlayer().id);
+    baseAnimationSetup("Turn's Up! Now for Player "+currentPlayer().id);
   }
 }
 
 void shotMadeAnimation(){
   if (millis() - shotMadeAnimationTime <= SHOT_MADE) {
-    baseAnimationSetup("Made a shot!");
+    baseAnimationSetup("Made a shot for "+currentPlayer().lastScoreAmount+" points!");
   }
 }
 
