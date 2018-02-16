@@ -10,28 +10,30 @@ import java.util.Map;
 
 // ** Arduino config
 Arduino arduino;
-int lastTime;                                // timer for target switches to reset
-final int DELAY_TIME = 1000;                 // Time for switch reset
+int lastShotMade;                             // used for target switches to reset, log shot made time
+final int DELAY_TIME = 1000;                  // Time for switch reset after shot is made
 
 // ** Game config vars
 final int holePins[] = { 3, 4, 5, 6, 7 };     // the pins that the sensors are attached to 
 final int holeValues[] = { 1, 3, 5, 7, 10 };
 final int ballCount = 10;                     // total balls per turn
 final int bustPenalty = 14;
-final int turnDuration = 180000;             // duration of each turn
-int numberOfPlayers = 1;
+final int turnDuration = 180000;              // duration of each turn
+int numberOfPlayers = 1;                      // number of players per game
 
-// ** Game and player state
-Player players[];                            // Holds the player objects
-int currentPlayerIndex;                      // index of current player in the Player array
+// ** Player state
+Player players[];                             // Holds the player objects
+int currentPlayerIndex;                       // index of current player in the Player array
 
+// ** Game state
 // Only of of these will be true at a time. ONLY update using the updateGameStateBooleanToTrue() method
+// Each has a corresponding screen, displayed with a method using the naming convention
+// show[gamestate]Screen (eg. showGameOnStandbyScreen())
 boolean gameOnStandby = false;
 boolean showingGameRules = false;
 boolean selectingPlayers = false;
 boolean gameRunning = false;
 boolean gameFinished = false;
-
 
 // ** Visual and animation vars
 PFont font;
@@ -43,7 +45,7 @@ int advancePlayerAnimationTime;
 final int ADVANCE_PLAYER = 2500;
 
 int shotMadeAnimationTime;
-final int SHOT_MADE = 2500;
+final int SHOT_MADE = 1000;
 
 int shotMissedAnimationTime;
 final int SHOT_MISSED = 2500;
@@ -51,18 +53,12 @@ final int SHOT_MISSED = 2500;
 int gameOverAnimationTime;
 final int GAME_OVER = 2500;
 
-
-
-// TODO: Not sure of the official way to make the game run with the visuals and hardware input.
-// Code below will made a new game with 4 players and 10 putts per turn
 void setup(){
   // Visual setup
   size(500, 500);
-  background(255);
   frameRate(30);
   font = createFont("Arial", 16, true);
   textFont(font);
-  stroke(255);     // Set stroke color to white
   
   // Arduino initializer
   arduino = new Arduino(this, Arduino.list()[1], 57600);
@@ -76,7 +72,6 @@ void setup(){
   //minim = new Minim(this);
   
   // Game vars setup
-  lastTime = millis();
   updateGameState("gameOnStandby");
 }
 
@@ -92,23 +87,23 @@ void draw() {
   
   // Show standby screen
   }else if(gameOnStandby){
-    showStandbyScreen();
+    showGameOnStandbyScreen();
   
   // Showing rules screen
   }else if(showingGameRules){
-    showRulesScreen();
+    showGameRulesScreen();
     
   // Selecting players actions
   }else if(selectingPlayers){
-    showPlayerSelect();
+    showSelectingPlayersScreen();
     
   // Game running actions
   }else if(gameRunning){
-    showScores();
+    showGameRunningScreen();
     
     // checking all sensors in the holes for a successful putt
     for(int i = 3; i <= 3; i++){
-      if(arduino.digitalRead(i) == Arduino.LOW && currentPlayer().ballsLeft > 0 && (millis() - lastTime >= DELAY_TIME)){
+      if(arduino.digitalRead(i) == Arduino.LOW && currentPlayer().ballsLeft > 0 && (millis() - lastShotMade >= DELAY_TIME)){
         //shotMade(i);
       }
     }
@@ -119,7 +114,7 @@ void draw() {
   
   // Game over actions
   }else if(gameFinished){
-    showGameOverStats();
+    showGameFinishedScreen();
     
     // Start button function, resets all variables
     // TODO: Assuming 9 is the pin for the start button
@@ -130,15 +125,14 @@ void draw() {
 }
 
 void shotMade(int pinNumber){
-  //successful put into hole sound effect goes below
-  //holeSuccessAlert = minim.loadFile("chaChing.wav");
-  //holeSuccessAlert.play();
+  // non-game-state variables
+  lastShotMade = millis();
+  shotMadeAnimationTime = millis();
+  // holeSuccessAlert = minim.loadFile("chaChing.wav");
+  // holeSuccessAlert.play();
 
   // Updating game vars
-  lastTime = millis();
   currentPlayer().madeShot(pinNumber);
-  shotMadeAnimationTime = millis();
-  
   if(currentPlayer().ballsLeft == 0 || currentPlayer().score == 21){
     advancePlayer();
   }

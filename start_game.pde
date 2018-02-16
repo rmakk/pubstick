@@ -13,6 +13,7 @@ void startTheGame(int numberOfPlayers, int ballsPerTurn) {
   // Universal game vars
   advancePlayerAnimationTime = millis();
   updateGameState("gameRunning");
+  lastShotMade = millis();
 }
 
 // Updates one of our game-flow booleans to be true and makes sure the others are set to false

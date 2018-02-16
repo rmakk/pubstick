@@ -1,3 +1,5 @@
+// Checks if any animation running. Used to prevent standard screens 
+// from showing while an animation is running
 boolean isAnimationRunning(){
   if (millis() - gameIntroAnimationTime <= GAME_INTRO ||
       millis() - advancePlayerAnimationTime <= ADVANCE_PLAYER ||
@@ -9,6 +11,8 @@ boolean isAnimationRunning(){
     return false;
   }
 }
+
+// ** Animations & transition screen functions below
 
 void baseAnimationSetup(String message){
   background(255, 204, 0);
@@ -25,7 +29,6 @@ void gameIntroAnimation() {
   }
 }
 
-// Advance player display
 void advancePlayerAnimation(){
   if (millis() - advancePlayerAnimationTime <= ADVANCE_PLAYER) {
     baseAnimationSetup("Now for Player "+currentPlayer().id);

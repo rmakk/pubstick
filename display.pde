@@ -1,11 +1,11 @@
-void showStandbyScreen() {
+void showGameOnStandbyScreen() {
   background(100); // Set the background to black
   fill(255);
   textAlign(CENTER);
   text("On Standby, Press Any Button to Begin!", 300, 300);
 }
 
-void showRulesScreen() {
+void showGameRulesScreen() {
   background(50); // Set the background to black
   fill(255);
   textAlign(CENTER);
@@ -13,7 +13,14 @@ void showRulesScreen() {
   text("Press Any Button to PLAY!", 300, 400);
 }
 
-void showScores() {
+void showSelectingPlayersScreen(){
+  background(0); // Set the background to black
+  fill(255);
+  textAlign(LEFT);
+  text("Number of players: "+numberOfPlayers, 300, 300);
+}
+
+void showGameRunningScreen() {
   background(0); // Set the background to black
   fill(255);
   textAlign(LEFT);
@@ -30,7 +37,7 @@ void showScores() {
 }
 
 // Prints out the final scores and winner!
-void showGameOverStats() {
+void showGameFinishedScreen() {
   background(0);
   textAlign(CENTER, CENTER);
   fill(255);
@@ -47,11 +54,4 @@ void showGameOverStats() {
       y = y + 30;
     }
   } 
-}
-
-void showPlayerSelect(){
-  background(0); // Set the background to black
-  fill(255);
-  textAlign(LEFT);
-  text("Number of players: "+numberOfPlayers, 300, 300);
 }
