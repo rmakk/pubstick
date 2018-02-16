@@ -28,7 +28,7 @@ void gameIntroAnimation() {
 // Advance player display
 void advancePlayerAnimation(){
   if (millis() - advancePlayerAnimationTime <= ADVANCE_PLAYER) {
-    baseAnimationSetup("Turn's Up! Now for Player "+currentPlayer().id);
+    baseAnimationSetup("Now for Player "+currentPlayer().id);
   }
 }
 

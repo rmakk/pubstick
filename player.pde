@@ -36,7 +36,7 @@ class Player{
      ballsUsed++; // incrementing number of balls that have been used
     
      int holeIndex = pinNumber - 3;
-     scoreAmount = holeValues[holeIndex];
+     int scoreAmount = holeValues[holeIndex];
      lastScoreAmount = scoreAmount;
      score = score + lastScoreAmount;
     

@@ -10,7 +10,7 @@ void showRulesScreen() {
   fill(255);
   textAlign(CENTER);
   text("!!!!!! RULES OF THE GAME !!!!!!", 300, 300);
-  text("On Standby, Press Any Button to PLAY!", 300, 400);
+  text("Press Any Button to PLAY!", 300, 400);
 }
 
 void showScores() {
