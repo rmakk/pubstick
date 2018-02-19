@@ -26,14 +26,20 @@ void showGameRunningScreen() {
   textAlign(LEFT);
   text("Currently Playing: Player "+(currentPlayerIndex+1), 300, 300);
   text("Balls Remaining: "+currentPlayer().ballsLeft, 300, 350);
-  text("Time Left: "+(currentPlayer().formattedRemainingTime()), 300, 400);
-  float y = 200;
   
-  for(int i = 0; i < players.length; i++){
-    String msg = players[i].name()+" Score: "+players[i].score+", Balls Used: "+players[i].ballsUsed;
-    text(msg, 30, y);
-    y = y + 30;
-  }
+  // Show timer
+  updateTimerSvgValues();
+  displaySvgTimer();
+  
+  // TODO: Display all scores at same time? Or just one?
+  scoreDisplay(); // only shows current players score right now
+  
+  //float y = 200;
+  //for(int i = 0; i < players.length; i++){
+  //  String msg = players[i].name()+" Score: "+players[i].score+", Balls Used: "+players[i].ballsUsed;
+  //  text(msg, 30, y);
+  //  y = y + 30;
+  //}
 }
 
 // Prints out the final scores and winner!

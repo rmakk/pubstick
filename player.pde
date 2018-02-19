@@ -27,47 +27,47 @@ class Player{
      return timer.getElapsedTime();
    }
    
-   String formattedRemainingTime(){
-    return nf(timer.minute(), 1)+":"+nf(timer.second(), 2);
+  void madeShot(int pinNumber){
+    ballsLeft--; // reducing the number of balls that have been used
+    ballsUsed++; // incrementing number of balls that have been used
+    
+    // update score
+    int holeIndex = pinNumber - 3;
+    int scoreAmount = holeValues[holeIndex];
+    lastScoreAmount = scoreAmount;
+    score = score + lastScoreAmount;
+      
+    // set score SVG
+    setScoreImage(score);
+    
+    // If player busts, reduce score to 14
+    // Otherwise, update score like usual
+    if(score > 21){
+      score = bustPenalty;
+      // TODO: probably trigger some animation here for when a player busts
+    }
   }
    
-   void madeShot(int pinNumber){
-     ballsLeft--; // reducing the number of balls that have been used
-     ballsUsed++; // incrementing number of balls that have been used
-    
-     int holeIndex = pinNumber - 3;
-     int scoreAmount = holeValues[holeIndex];
-     lastScoreAmount = scoreAmount;
-     score = score + lastScoreAmount;
-    
-     // If player busts, reduce score to 14
-     // Otherwise, update score like usual
-     if(score > 21){
-       score = bustPenalty;
-       // TODO: probably trigger some animation here for when a player busts
-     }
-   }
+  // At end of player turn, deduct -1 for each ball remaining. 
+  // Stop this player's timer
+  void endTurn(){
+    if(ballsLeft > 0 && isTimerOver()){
+      score = score - ballsLeft;
+    }
+    timer.stop();
+  }
    
-   // At end of player turn, deduct -1 for each ball remaining. 
-   // Stop this player's timer
-   void endTurn(){
-     if(ballsLeft > 0 && isTimerOver()){
-       score = score - ballsLeft;
-     }
-     timer.stop();
-   }
+  boolean isTimerOver(){
+    if(timer.getRemainingTime() <= 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
    
-   boolean isTimerOver(){
-     if(timer.getRemainingTime() <= 0){
-       return true;
-     }else{
-       return false;
-     }
-   }
-   
-   String name(){
-     return "Player "+id;
-   }
+  String name(){
+    return "Player "+id;
+  }
 }
 
 // Method to return the winner player at the end of game.

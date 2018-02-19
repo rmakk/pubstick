@@ -2,6 +2,7 @@ import cc.arduino.*;
 import org.firmata.*;
 import processing.serial.*;
 import java.util.Map;
+import java.util.Arrays;
 //import ddf.minim.*;
 
 // ** Audio config
@@ -59,6 +60,7 @@ void setup(){
   frameRate(30);
   font = createFont("Arial", 16, true);
   textFont(font);
+  initSvgDrawing();
   
   // Arduino initializer
   arduino = new Arduino(this, Arduino.list()[1], 57600);
@@ -151,6 +153,7 @@ void advancePlayer(){
   // 1. More players left, so advance to next player
   // 2. This is the last player, game over
   if(currentPlayerIndex < (players.length-1)){
+    setScoreImageToZero();
     currentPlayerIndex++;
     currentPlayer().startPlayerTimer();
     advancePlayerAnimationTime = millis();
@@ -171,7 +174,7 @@ void mousePressed(){
   }else if(showingGameRules){
     updateGameState("selectingPlayers");
   }else if(selectingPlayers){
-    startTheGame(numberOfPlayers, ballCount);
+    startNewGame(numberOfPlayers, ballCount);
   }else if(gameFinished){
     updateGameState("gameOnStandby");
   }

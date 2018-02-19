@@ -1,5 +1,5 @@
 // Resets game variables for a fresh start
-void startTheGame(int numberOfPlayers, int ballsPerTurn) {
+void startNewGame(int numberOfPlayers, int ballsPerTurn) {
   // Setting up new players
   players = new Player[numberOfPlayers];
   for(int i = 0; i < players.length; i++){
@@ -14,6 +14,10 @@ void startTheGame(int numberOfPlayers, int ballsPerTurn) {
   advancePlayerAnimationTime = millis();
   updateGameState("gameRunning");
   lastShotMade = millis();
+  
+  // Init score display to zero
+  setScoreImageToZero();
+  lastUpdatedTimeAt = millis();
 }
 
 // Updates one of our game-flow booleans to be true and makes sure the others are set to false

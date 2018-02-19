@@ -1,3 +1,6 @@
+int lastUpdatedTimeAt;
+final int TIMER_DRAW_INTERVAL = 1000;
+
 class Timer {
   int startTime = 0;
   int stopTime = 0;
@@ -35,7 +38,16 @@ class Timer {
   int second(){
     return (getRemainingTime() / 1000) % 60;
   }
+  
   int minute(){
     return (getRemainingTime() / (1000*60)) % 60;
+  }
+  
+  String formattedRemainingTimeForSvg(){
+    return nf(minute(), 1)+""+nf(second(), 2);
+  }
+  
+  String formattedRemainingTime(){
+    return nf(minute(), 1)+":"+nf(second(), 2);
   }
 }
