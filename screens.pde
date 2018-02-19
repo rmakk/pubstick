@@ -16,8 +16,16 @@ void showGameRulesScreen() {
 void showSelectingPlayersScreen(){
   background(0); // Set the background to black
   fill(255);
-  textAlign(LEFT);
-  text("Number of players: "+numberOfPlayers, 300, 300);
+  
+  int xLocation = 100;
+  int yLocation = 100;
+  
+  drawPlayerSelectIndicator(xLocation, yLocation);
+  
+  for(int i = 0; i < maxNumberOfPlayers; i++){
+    text(i+1, xLocation, yLocation);
+    xLocation = xLocation + 100;
+  }
 }
 
 void showGameRunningScreen() {

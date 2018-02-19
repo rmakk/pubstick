@@ -1,5 +1,6 @@
 // ** General SVG vars
 PShape allSvgNumbers[] = new PShape[10];
+PShape svgPlayerSelectIndicator;
 final int svgNumberWidth = 80;
 final int svgNumberHeight = 96;
 final int svgNumberSpacing = 60;
@@ -21,6 +22,7 @@ void initSvgDrawing(){
     String imageToLoad = "carnival_numbers_" + i + ".svg";
     allSvgNumbers[i] = loadShape(imageToLoad);
   }
+  svgPlayerSelectIndicator = loadShape("bonusball_pointer_50_l.svg");
 }
 
 void displaySvgTimer(){
@@ -69,4 +71,13 @@ void setScoreImage(int scoreAmount){
   }
   
   scoreSvgNumbers[1] = allSvgNumbers[secondDigit];
+}
+
+// Draw the indicator under the number of players selected
+void drawPlayerSelectIndicator(int numberOfPlayersX, int numberOfPlayersY){
+  int svgOffset = -40;
+  int svgXLocation = (numberOfPlayersX * numberOfPlayers) + svgOffset;
+  int svgYLocation = numberOfPlayersY - 20;
+  
+  shape(svgPlayerSelectIndicator, svgXLocation, svgYLocation, 100, 100);
 }

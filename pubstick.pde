@@ -20,6 +20,7 @@ final int holeValues[] = { 1, 3, 5, 7, 10 };
 final int ballCount = 10;                     // total balls per turn
 final int bustPenalty = 14;
 final int turnDuration = 180000;              // duration of each turn
+final int maxNumberOfPlayers = 4;
 int numberOfPlayers = 1;                      // number of players per game
 
 // ** Player state

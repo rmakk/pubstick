@@ -7,7 +7,7 @@ class Player{
    Timer timer;
    
    Player(int ballsPerTurn, int playerId){
-     timer = new Timer(turnDuration);
+     timer = new Timer(turnDuration+ADVANCE_PLAYER);
      ballsLeft = ballsPerTurn;
      ballsUsed = 0;
      score = 0;
