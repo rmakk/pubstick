@@ -11,7 +11,7 @@ void startNewGame(int numberOfPlayers, int ballsPerTurn) {
   players[currentPlayerIndex].startPlayerTimer();
   
   // Universal game vars
-  advancePlayerAnimationTime = millis();
+  advancePlayerAnimationStartTime = millis();
   updateGameState("gameRunning");
   lastShotMade = millis();
   

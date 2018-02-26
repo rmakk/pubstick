@@ -40,19 +40,19 @@ boolean gameFinished = false;
 // ** Visual and animation vars
 PFont font;
 
-int gameIntroAnimationTime;
+int gameIntroAnimationStartTime;
 final int GAME_INTRO = 2500;
 
-int advancePlayerAnimationTime;
+int advancePlayerAnimationStartTime;
 final int ADVANCE_PLAYER = 2500;
 
-int shotMadeAnimationTime;
+int shotMadeAnimationStartTime;
 final int SHOT_MADE = 1000;
 
-int shotMissedAnimationTime;
+int shotMissedAnimationStartTime;
 final int SHOT_MISSED = 2500;
 
-int gameOverAnimationTime;
+int gameOverAnimationStartTime;
 final int GAME_OVER = 2500;
 
 void setup(){
@@ -81,12 +81,7 @@ void setup(){
 void draw() {
   
   if(isAnimationRunning()){
-    // Run animations
-    gameIntroAnimation();
-    advancePlayerAnimation();
-    shotMadeAnimation();
-    shotMissedAnimation();
-    gameOverAnimation();
+    runAnimations();
   
   // Show standby screen
   }else if(gameOnStandby){
@@ -130,7 +125,7 @@ void draw() {
 void shotMade(int pinNumber){
   // non-game-state variables
   lastShotMade = millis();
-  shotMadeAnimationTime = millis();
+  shotMadeAnimationStartTime = millis();
   // holeSuccessAlert = minim.loadFile("chaChing.wav");
   // holeSuccessAlert.play();
 
@@ -142,7 +137,7 @@ void shotMade(int pinNumber){
 }
 
 void shotMissed(){
-  shotMissedAnimationTime = millis();
+  shotMissedAnimationStartTime = millis();
 }
 
 // Actions when a players turn is over
@@ -157,9 +152,9 @@ void advancePlayer(){
     setScoreImageToZero();
     currentPlayerIndex++;
     currentPlayer().startPlayerTimer();
-    advancePlayerAnimationTime = millis();
+    advancePlayerAnimationStartTime = millis();
   } else if(currentPlayerIndex == (players.length-1)){
-    gameOverAnimationTime = millis();
+    gameOverAnimationStartTime = millis();
     updateGameState("gameFinished");
   }
 }
@@ -185,7 +180,7 @@ void mousePressed(){
 // If game is running: Simulating 1-5 on the keyboard are holes 1-5
 void keyPressed() {
   int keyVal = Character.getNumericValue(key);
-  if(keyVal >= 1 && keyVal <= 5){
+  if(keyVal >= 1 && keyVal <= 5 && !isAnimationRunning()){
     if(gameRunning){
       int pinHit = holePins[keyVal-1]; // Dummy conversion to the pin value from the key pressed.
       shotMade(pinHit);
