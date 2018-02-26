@@ -37,6 +37,11 @@ boolean selectingPlayers = false;
 boolean gameRunning = false;
 boolean gameFinished = false;
 
+// Amount of time to wait before drawing anything
+// Prevents issues with attempting to run animations
+// before the game has begun
+final int GAME_STARTUP_TIME = 5000;
+
 // ** Visual and animation vars
 PFont font;
 
@@ -80,7 +85,8 @@ void setup(){
 
 void draw() {
   
-  if(isAnimationRunning()){
+  // Check for animations first to draw those over any screens
+  if(isAnimationRunning() && millis() > GAME_STARTUP_TIME){
     runAnimations();
   
   // Show standby screen
