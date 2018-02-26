@@ -37,15 +37,15 @@ class Player{
     lastScoreAmount = scoreAmount;
     score = score + lastScoreAmount;
       
-    // set score SVG
-    setScoreImage(score);
-    
     // If player busts, reduce score to 14
     // Otherwise, update score like usual
     if(score > 21){
       score = bustPenalty;
       // TODO: probably trigger some animation here for when a player busts
     }
+    
+    // set score SVG last in case of bust
+    setScoreImage(score);
   }
    
   // At end of player turn, deduct -1 for each ball remaining. 
