@@ -1,6 +1,7 @@
 // ** General SVG vars
 PShape allSvgNumbers[] = new PShape[10];
 PShape svgPlayerSelectIndicator;
+
 final int svgNumberWidth = 80;
 final int svgNumberHeight = 96;
 final int svgNumberSpacing = 60;
@@ -74,10 +75,9 @@ void setScoreImage(int scoreAmount){
 }
 
 // Draw the indicator under the number of players selected
-void drawPlayerSelectIndicator(int numberOfPlayersX, int numberOfPlayersY){
-  int svgOffset = -40;
-  int svgXLocation = (numberOfPlayersX * numberOfPlayers) + svgOffset;
-  int svgYLocation = numberOfPlayersY - 20;
+void drawPlayerSelectIndicator(){
+  int svgXLocation = (200 * numberOfPlayers) - 50;
+  int svgYLocation = 400;
   
   shape(svgPlayerSelectIndicator, svgXLocation, svgYLocation, 100, 100);
 }

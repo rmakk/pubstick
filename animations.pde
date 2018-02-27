@@ -1,3 +1,9 @@
+Movie shotMadeOnePoint;
+
+void initAnimations(){
+  shotMadeOnePoint = new Movie(this, "1_point.mov");
+}
+
 // Checks if any animation running. Used to prevent standard screens 
 // from showing while an animation is running
 boolean isAnimationRunning(){
@@ -46,7 +52,7 @@ void advancePlayerAnimation(){
 
 void shotMadeAnimation(){
   if (millis() - shotMadeAnimationStartTime <= SHOT_MADE) {
-    baseAnimationSetup("Made a shot for "+currentPlayer().lastScoreAmount+" points!");
+    image(shotMadeOnePoint, 0, 0);
   }
 }
 

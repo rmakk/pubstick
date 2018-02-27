@@ -6,26 +6,12 @@ void showGameOnStandbyScreen() {
 }
 
 void showGameRulesScreen() {
-  background(50); // Set the background to black
-  fill(255);
-  textAlign(CENTER);
-  text("!!!!!! RULES OF THE GAME !!!!!!", 300, 300);
-  text("Press Any Button to PLAY!", 300, 400);
+  displaySvgRulesScreen();
 }
 
 void showSelectingPlayersScreen(){
-  background(0); // Set the background to black
-  fill(255);
-  
-  int xLocation = 100;
-  int yLocation = 100;
-  
-  drawPlayerSelectIndicator(xLocation, yLocation);
-  
-  for(int i = 0; i < maxNumberOfPlayers; i++){
-    text(i+1, xLocation, yLocation);
-    xLocation = xLocation + 100;
-  }
+  displayPlayerSelectImage();
+  drawPlayerSelectIndicator();
 }
 
 void showGameRunningScreen() {
@@ -33,7 +19,8 @@ void showGameRunningScreen() {
   fill(255);
   textAlign(LEFT);
   text("Currently Playing: Player "+(currentPlayerIndex+1), 300, 300);
-  text("Balls Remaining: "+currentPlayer().ballsLeft, 300, 350);
+  
+  displayImageBallsRemaining();
   
   // Show timer
   updateTimerSvgValues();

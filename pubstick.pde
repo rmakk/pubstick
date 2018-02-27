@@ -3,6 +3,7 @@ import org.firmata.*;
 import processing.serial.*;
 import java.util.Map;
 import java.util.Arrays;
+import processing.video.*;
 //import ddf.minim.*;
 
 // ** Audio config
@@ -52,7 +53,8 @@ int advancePlayerAnimationStartTime;
 final int ADVANCE_PLAYER = 2500;
 
 int shotMadeAnimationStartTime;
-final int SHOT_MADE = 1000;
+final int SHOT_MADE = 2000;
+
 
 int shotMissedAnimationStartTime;
 final int SHOT_MISSED = 2500;
@@ -60,13 +62,18 @@ final int SHOT_MISSED = 2500;
 int gameOverAnimationStartTime;
 final int GAME_OVER = 2500;
 
+final int SCREEN_HEIGHT = 540;
+final int SCREEN_WIDTH = 960;
+
 void setup(){
   // Visual setup
-  size(500, 500);
+  size(960, 540);
   frameRate(30);
   font = createFont("Arial", 16, true);
   textFont(font);
   initSvgDrawing();
+  initImages();
+  initAnimations();
   
   // Arduino initializer
   arduino = new Arduino(this, Arduino.list()[1], 57600);
@@ -108,7 +115,11 @@ void draw() {
     // checking all sensors in the holes for a successful putt
     for(int i = 3; i <= 3; i++){
       if(arduino.digitalRead(i) == Arduino.LOW && currentPlayer().ballsLeft > 0 && (millis() - lastShotMade >= DELAY_TIME)){
-        //shotMade(i);
+        //if(i == [whatever missed sensor is]){
+        //  shotMissed();
+        //}else{
+        //  shotMade(i);
+        //} 
       }
     }
     
@@ -134,6 +145,9 @@ void shotMade(int pinNumber){
   shotMadeAnimationStartTime = millis();
   // holeSuccessAlert = minim.loadFile("chaChing.wav");
   // holeSuccessAlert.play();
+
+  // TODO: trigger different animations based on pinNumber
+  shotMadeOnePoint.play();
 
   // Updating game vars
   currentPlayer().madeShot(pinNumber);
@@ -195,6 +209,12 @@ void keyPressed() {
     }
   }
 }
+
+// Called every time a new frame is available to read
+void movieEvent(Movie m) {
+  m.read();
+}
+
 
 void stop(){
   // always stop Minim before exiting
